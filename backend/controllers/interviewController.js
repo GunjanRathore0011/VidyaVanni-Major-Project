@@ -1,5 +1,6 @@
 const Interview = require("../models/InterviewModel");
 const { generateQuestions } = require("../Service/geminiService");
+const { startVapiInterview } = require("../Service/vapiService");
 
 const createInterview = async (req, res) => {
   try {
@@ -43,4 +44,23 @@ const createInterview = async (req, res) => {
   }
 };
 
-module.exports = { createInterview };
+const startInterviewSession = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const interview = await Interview.findById(id);
+    if (!interview) return res.status(404).json({ message: "Interview not found" });
+
+    const vapiSession = await startVapiInterview(interview);
+
+    res.status(200).json({
+      success: true,
+      message: "Interview started successfully",
+      data: vapiSession,
+    });
+  } catch (error) {
+    console.error("Error in startInterviewSession:", error);
+    res.status(500).json({ message: "Failed to start Vapi interview" });
+  }
+};
+
+module.exports = {createInterview , startInterviewSession };
