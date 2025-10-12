@@ -25,6 +25,9 @@ app.use("/api/auth",userRoute);
 const interviewRoute= require("./routes/interviewRoute")
 app.use("/api/interview", interviewRoute);
 
+const gitrepoRoute=require("./routes/gitrepoRoute");
+app.use("/api", gitrepoRoute);
+
 app.listen(PORT,()=>{
     console.log(`Server is running on port ${PORT}`);
 });
