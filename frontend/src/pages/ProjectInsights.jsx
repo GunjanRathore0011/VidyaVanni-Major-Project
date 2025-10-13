@@ -6,6 +6,7 @@ const ProjectInsights = () => {
   const [data, setData] = useState(null);
   const [error, setError] = useState("");
   const [showAnswers, setShowAnswers] = useState(false);
+  const [copied, setCopied] = useState(false);
 
   const handleAnalyze = async () => {
     if (!repoUrl) {
@@ -17,7 +18,6 @@ const ProjectInsights = () => {
     setData(null);
 
     try {
-      // Step 1: Get repo info
       const repoRes = await fetch("http://localhost:4000/api/repo-info", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -25,7 +25,6 @@ const ProjectInsights = () => {
       });
       const repoInfo = await repoRes.json();
 
-      // Step 2: Send to LLM
       const llmRes = await fetch("http://localhost:4000/api/analyze-llm", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -52,58 +51,69 @@ const ProjectInsights = () => {
     }
   };
 
+  const handleCopy = () => {
+    const textToCopy = data.resume_points.join("\n");
+    navigator.clipboard.writeText(textToCopy);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
   return (
-    <div className="max-w-4xl mx-auto p-6 mt-6 bg-gray-50 rounded-2xl shadow-lg">
-      <h2 className="text-3xl font-bold mb-6 text-center text-blue-700">
+    <div className="max-w-5xl mx-auto p-8 mt-10 bg-gradient-to-br from-purple-600 to-blue-600 rounded-3xl shadow-2xl">
+      <h2 className="text-3xl font-bold mb-8 text-center text-white drop-shadow-md">
         🔍 GitHub Project Insights
       </h2>
 
       {/* Input Section */}
-      <div className="flex gap-2 mb-6">
+      <div className="flex gap-2 mb-6 bg-white rounded-xl p-4 shadow-md">
         <input
           type="text"
           value={repoUrl}
           onChange={(e) => setRepoUrl(e.target.value)}
           placeholder="Enter GitHub Repo URL (e.g. https://github.com/owner/repo)"
-          className="flex-1 border border-gray-300 p-3 rounded-lg focus:outline-blue-500"
+          className="flex-1 border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
         />
         <button
           onClick={handleAnalyze}
           disabled={loading}
-          className="bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700 transition-all disabled:opacity-60"
+          className="bg-purple-600 text-white px-5 py-2 rounded-lg hover:bg-purple-700 transition-all disabled:opacity-60"
         >
           {loading ? "Analyzing..." : "Analyze"}
         </button>
       </div>
 
       {error && (
-        <div className="text-red-600 text-center mb-4 font-medium">{error}</div>
+        <div className="text-red-100 bg-red-600/60 p-3 rounded-lg text-center mb-4 font-medium">
+          {error}
+        </div>
       )}
 
       {/* Results */}
       {data && (
-        <div className="space-y-8 mt-4">
+        <div className="space-y-8 mt-6 bg-white p-6 rounded-2xl shadow-xl">
           {/* Summary */}
           {data.summary && (
-            <div className="bg-white shadow-md rounded-xl p-5">
-              <h3 className="text-xl font-semibold  text-blue-600 mb-3">
+            <div className="bg-gradient-to-r from-purple-100 to-blue-50 rounded-xl p-5 shadow-md">
+              <h3 className="text-xl font-semibold text-purple-700 mb-3">
                 🧩 Project Summary
               </h3>
-              <p className="text-gray-700 text-justify">{data.summary}</p>
+              <p className="text-gray-700 leading-relaxed text-justify">
+                {data.summary}
+              </p>
             </div>
           )}
 
           {/* Tech Stack */}
           {data.tech_stack && data.tech_stack.length > 0 && (
-            <div className="bg-white shadow-md rounded-xl p-5">
-              <h3 className="text-xl font-semibold  text-blue-600 mb-3">
+            <div className="bg-gradient-to-r from-blue-50 to-purple-100 rounded-xl p-5 shadow-md">
+              <h3 className="text-xl font-semibold text-purple-700 mb-3">
                 🧠 Tech Stack
               </h3>
-              <div className="flex flex-wrap justify-center gap-2">
+              <div className="flex flex-wrap gap-3 justify-center">
                 {data.tech_stack.map((tech, idx) => (
                   <span
                     key={idx}
-                    className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium shadow-sm"
+                    className="px-3 py-1 bg-purple-600 text-white rounded-full text-sm font-medium shadow-md hover:scale-105 transition-transform"
                   >
                     {tech}
                   </span>
@@ -114,55 +124,48 @@ const ProjectInsights = () => {
 
           {/* Resume Points */}
           {data.resume_points && data.resume_points.length > 0 && (
-  <div className="bg-white shadow-md rounded-xl p-5">
-    <div className="flex justify-between items-center mb-3">
-      <h3 className="text-xl font-semibold text-blue-600">
-        💼 Resume Highlights
-      </h3>
-      <button
-        onClick={() => {
-          const textToCopy = data.resume_points.join("\n");
-          navigator.clipboard.writeText(textToCopy);
-          alert("✅ Resume points copied to clipboard!");
-        }}
-        className="text-sm bg-blue-600 text-white px-4 py-1.5 rounded-md hover:bg-blue-700 transition-all"
-      >
-        Copy
-      </button>
-    </div>
-
-    <ul className="list-disc pl-6 text-gray-700 space-y-1">
-      {data.resume_points.map((point, idx) => (
-        <li key={idx}>{point}</li>
-      ))}
-    </ul>
-  </div>
-)}
-
+            <div className="bg-gradient-to-r from-purple-100 to-blue-50 rounded-xl p-5 shadow-md relative">
+              <div className="flex justify-between items-center mb-3">
+                <h3 className="text-xl font-semibold text-purple-700">
+                  💼 Resume Highlights
+                </h3>
+                <button
+                  onClick={handleCopy}
+                  className="text-sm bg-purple-600 text-white px-4 py-1.5 rounded-md hover:bg-purple-700 transition-all"
+                >
+                  {copied ? "Copied!" : "Copy"}
+                </button>
+              </div>
+              <ul className="list-disc pl-6 text-gray-700 space-y-2">
+                {data.resume_points.map((point, idx) => (
+                  <li key={idx}>{point}</li>
+                ))}
+              </ul>
+            </div>
+          )}
 
           {/* Interview Section */}
           {data.interview_questions && data.interview_questions.length > 0 && (
-            <div className="bg-white shadow-md rounded-xl p-5 relative">
+            <div className="bg-gradient-to-r from-blue-50 to-purple-100 rounded-xl p-5 shadow-md relative">
               <div className="flex justify-between items-center mb-3">
-                <h3 className="text-xl font-semibold text-blue-600">
+                <h3 className="text-xl font-semibold text-purple-700">
                   🎯 Interview Questions
                 </h3>
                 <button
                   onClick={() => setShowAnswers(!showAnswers)}
-                  className="text-sm bg-blue-600 text-white px-4 py-1.5 rounded-md hover:bg-blue-700 transition-all"
+                  className="text-sm bg-purple-600 text-white px-4 py-1.5 rounded-md hover:bg-purple-700 transition-all"
                 >
                   {showAnswers ? "Hide Answers" : "Show Answers"}
                 </button>
               </div>
 
-              {/* Questions (and Answers if visible) */}
               <ul className="list-decimal pl-6 text-gray-700 space-y-3">
                 {data.interview_questions.map((q, idx) => (
                   <li key={idx}>
                     <p className="font-medium">{q}</p>
                     {showAnswers && data.interview_answers && (
                       <p className="mt-1 text-gray-600">
-                        <span className="font-semibold text-blue-700">
+                        <span className="font-semibold text-purple-700">
                           Answer:
                         </span>{" "}
                         {data.interview_answers[idx]}
