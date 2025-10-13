@@ -17,32 +17,36 @@ const analyzeLLM = async (req, res) => {
 
     // 🧠 New, more intelligent prompt:
     const prompt = `
-You are an expert full-stack AI assistant that analyzes GitHub project codebases.
+You are an expert AI project analyst specializing in all areas of Computer Science — including Full Stack Development, Machine Learning, AI, Data Science, Cybersecurity, DevOps, Cloud Computing, and related fields.
 
 Here is the repository summary extracted from the files:
 """
 ${repoInfo.raw_text}
 """
 
-Now, analyze this project and generate a structured JSON output with **NO extra text**, in this exact format:
+Now, analyze this project and generate a structured JSON output with **NO extra text**, strictly in this format:
+
 {
-  "summary": "Give a 3-5 sentence overview describing what the project does in practical terms, including frontend/backend roles, purpose, and functionality.",
-  "tech_stack": ["List the actual technologies/frameworks/libraries detected from the code (React, Express, Node.js, MongoDB, etc). Avoid guessing."],
+  "summary": "Provide a 3–5 sentence overview of what the project does, its main purpose, and how it works — clearly mentioning its field (e.g., AI, Web, ML, Cybersecurity, etc.) and overall functionality.",
+  "tech_stack": ["List the actual technologies, libraries, or frameworks detected directly from the codebase (e.g., React, Node.js, TensorFlow, Flask, Docker, etc.). Avoid assumptions."],
   "resume_points": [
-    "Write 4–6 concise resume-friendly bullet points describing what was built and what skills were applied. Use active verbs like 'Developed', 'Integrated', 'Implemented', etc."
+    "Write 4–5 concise, ATS-friendly bullet points describing what was built and what skills were demonstrated. Each should start with a strong action verb (e.g., 'Developed', 'Integrated', 'Designed', 'Optimized'). Keep each under 20 words."
   ],
   "interview_questions": [
-    "Write 5 realistic technical interview questions that a recruiter might ask about this project’s implementation (focus on the specific stack, architecture, API design, or logic)."
+    "List 10 realistic, short, and technical interview questions that recruiters or technical interviewers might ask based on this project. These should focus on actual implementation details, challenges, and architecture — not theory or diagrams."
+  ],
+  "interview_answers": [
+    "Provide clear, to-the-point answers (3–5 sentences each) to the above 10 interview questions, reflecting real-world understanding and practical reasoning."
   ]
 }
 
-Important:
-- If React code or JSX files exist, mention React (not plain JavaScript).
-- If Express or Flask code exists, confirm it clearly.
-- Avoid using 'likely' or uncertain words.
-- Focus on **practical** and **real-world** relevance.
-- Return only JSON, no explanations or markdown fences.
+Important Guidelines:
+- Ensure accuracy: detect actual stack from the repository, not from assumptions.
+- Use professional, resume-appropriate language.
+- Questions and answers must be practical and realistic — avoid generic textbook-style ones.
+- Return only JSON. No markdown fences or explanations.
 `;
+
 
     const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
     const result = await model.generateContent(prompt);
