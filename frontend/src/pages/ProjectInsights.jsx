@@ -59,20 +59,18 @@ const ProjectInsights = () => {
   };
 
   return (
-    <div className="min-h-screen  bg-gradient-to-br from-[#0b0014] via-[#1a0025] to-[#26004d]  text-white flex flex-col items-center px-6 py-10 font-inter relative overflow-hidden">
-      {/* Background Blur Layers */}
-      {/* Background Gradient and Glow Effects */}
+    <div className="min-h-screen bg-gradient-to-br from-[#1a0025] via-[#26004d] to-[#0b0014] text-white flex flex-col items-center px-6 py-10 font-inter relative overflow-hidden">
+      {/* Background Gradient & Glow */}
       <div className="absolute inset-0 z-0 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#0b0014] via-[#1a0025] to-[#26004d]" />
+        <div className="absolute inset-0 bg-gradient-to-br from-[#1a0025] via-[#26004d] to-[#0b0014]" />
 
         {/* Glow Circles */}
-        <div className="absolute top-[-100px] left-[-100px] w-[600px] h-[600px]  bg-gradient-to-br from-[#9b5cff] via-[#c847ff] to-[#00d9ff]  opacity-30 blur-[180px] rounded-full animate-pulse"></div>
-        <div className="absolute bottom-[-100px] right-[-100px] w-[600px] h-[600px]  bg-gradient-to-tr from-[#ff0080] via-[#9b5cff] to-[#007aff] opacity-30 blur-[180px] rounded-full animate-pulse"></div>
+        {/* <div className="absolute top-[-100px] left-[-100px] w-[600px] h-[600px] bg-gradient-to-br from-[#ff0064] via-[#ad46ff] to-[#00ff64] opacity-25 blur-[200px] rounded-full animate-pulse"></div> */}
+        {/* <div className="absolute bottom-[-100px] right-[-100px] w-[600px] h-[600px] bg-gradient-to-tr from-[#00ff64] via-[#ff0064] to-[#ad46ff] opacity-25 blur-[200px] rounded-full animate-pulse"></div> */}
       </div>
 
-
-      <div className="relative z-10 w-full max-w-6xl text-center  mb-10 mt-56">
-        <h1 className="text-4xl md:text-5xl font-bold mb-3 text-violet-300 bg-clip-text ">
+      <div className="relative z-10 w-full max-w-6xl text-center mb-10 mt-56">
+        <h1 className="text-4xl md:text-5xl font-bold mb-5 text-transparent bg-clip-text bg-[#ff0064]">
           🔍 GitHub Project Insights Dashboard
         </h1>
         <p className="text-gray-300 text-sm md:text-base">
@@ -81,7 +79,7 @@ const ProjectInsights = () => {
       </div>
 
       {/* Input Box */}
-      <div className="relative z-10 flex w-full max-w-3xl backdrop-blur-md bg-white/10 border border-white/20 p-4 rounded-2xl shadow-lg mb-10">
+      <div className="relative z-10 flex w-full max-w-3xl backdrop-blur-md bg-white/10 border border-white/10 p-4 rounded-2xl shadow-lg mb-10">
         <input
           type="text"
           value={repoUrl}
@@ -92,7 +90,7 @@ const ProjectInsights = () => {
         <button
           onClick={handleAnalyze}
           disabled={loading}
-          className="cursor-pointer px-6 py-2 backdrop-blur-md bg-white/10 border border-white/10 rounded-xl font-semibold hover:opacity-90 transition disabled:opacity-60"
+          className="cursor-pointer px-6 py-2 rounded-xl font-semibold "
         >
           {loading ? "Analyzing..." : "Analyze"}
         </button>
@@ -111,9 +109,8 @@ const ProjectInsights = () => {
           <div className="md:col-span-2 flex flex-col gap-8">
             {/* Project Summary */}
             {data.summary && (
-                           <div className="backdrop-blur-2xl bg-white/10 border border-white/10 p-6 rounded-2xl shadow-[0_0_25px_rgba(255,255,255,0.05)] hover:shadow-[0_0_30px_rgba(147,51,234,0.4)] transition-all duration-300">
-
-                <h3 className="text-2xl font-semibold mb-3 text-purple-300">
+              <div className="backdrop-blur-2xl bg-white/10 border border-white/10 p-6 rounded-2xl  transition-all duration-300">
+                <h3 className="text-2xl font-semibold mb-3 text-[#ff80c0]">
                   🧩 Project Summary
                 </h3>
                 <p className="text-gray-200 p-5 leading-relaxed">{data.summary}</p>
@@ -122,9 +119,9 @@ const ProjectInsights = () => {
 
             {/* Resume Highlights */}
             {data.resume_points && data.resume_points.length > 0 && (
-              <div className="backdrop-blur-2xl mt-6 bg-white/10 border border-white/10 p-6 rounded-2xl shadow-[0_0_25px_rgba(255,255,255,0.05)] hover:shadow-[0_0_30px_rgba(147,51,234,0.4)] transition-all duration-300">
+              <div className="backdrop-blur-2xl mt-6 bg-white/10 border border-white/10 p-6 rounded-2xl  transition-all duration-300">
                 <div className="flex justify-between items-center mb-3">
-                  <h3 className="text-2xl font-semibold text-blue-300">
+                  <h3 className="text-2xl font-semibold text-[#00ff64]">
                     💼 Resume Highlights
                   </h3>
                   <button
@@ -145,21 +142,18 @@ const ProjectInsights = () => {
 
           {/* Tech Stack */}
           {data.tech_stack && data.tech_stack.length > 0 && (
-              <div className="backdrop-blur-2xl bg-white/10 border border-white/10 p-6 rounded-2xl shadow-[0_0_25px_rgba(255,255,255,0.05)] hover:shadow-[0_0_30px_rgba(147,51,234,0.4)] transition-all duration-300">
-            
-              <h3 className="text-2xl font-semibold text-pink-300 mb-3">
+            <div className="backdrop-blur-2xl bg-white/10 border border-white/10 p-6 rounded-2xl  transition-all duration-300">
+              <h3 className="text-2xl font-semibold text-[#ff80c0] mb-3">
                 🧠 Tech Stack
               </h3>
               <div className="flex flex-wrap gap-3">
                 {data.tech_stack.map((tech, idx) => (
                   <span
                     key={idx}
-                    className="px-3 py-1.5 
-  rounded-full text-sm font-medium text-white backdrop-blur-md  transition-all duration-300"
+                    className="px-3 py-1.5 rounded-full text-sm font-medium text-white backdrop-blur-md bg-gradient-to-r from-[#ff0064]/20 to-[#00ff64]/20 border border-white/10"
                   >
                     {tech}
                   </span>
-
                 ))}
               </div>
             </div>
@@ -169,9 +163,9 @@ const ProjectInsights = () => {
 
       {/* Interview Questions */}
       {data?.interview_questions?.length > 0 && (
-        <div className="relative z-10 w-full max-w-7xl mt-10 backdrop-blur-lg bg-white/10 border border-white/20 p-6 rounded-2xl shadow-[0_0_25px_rgba(255,255,255,0.05)] hover:shadow-[0_0_30px_rgba(147,51,234,0.4)] transition-all">
+        <div className="relative z-10 w-full max-w-7xl mt-10 backdrop-blur-lg bg-white/10 border border-white/20 p-6 rounded-2xl  transition-all">
           <div className="flex justify-between items-center mb-4">
-            <h3 className="text-2xl font-semibold text-purple-300">
+            <h3 className="text-2xl font-semibold text-[#ff80c0]">
               💡 Interview Questions
             </h3>
             <button
@@ -187,7 +181,7 @@ const ProjectInsights = () => {
                 <p className="font-medium">{q}</p>
                 {showAnswers && data.interview_answers && (
                   <p className="mt-1 text-gray-300">
-                    <span className="font-semibold text-purple-400">
+                    <span className="font-semibold text-[#00ff64]">
                       Answer:
                     </span>{" "}
                     {data.interview_answers[idx]}
