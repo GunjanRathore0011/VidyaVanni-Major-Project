@@ -1,6 +1,7 @@
 import React from "react";
 import FeaturesSection from "../components/FeaturesSection";
 import { GlowCard } from "@/components/ui/glow-card";
+import homelogo from "../assets/images/home.png";
 
 const Home = () => {
   const heroImage = "YOUR_IMAGE_PATH_HERE"; // Replace later with your illustration
@@ -54,7 +55,7 @@ const Home = () => {
             {/* Illustration Section */}
             <div className="md:w-1/2 mt-10 md:mt-0 flex justify-center">
               <img
-                src={heroImage}
+                src={homelogo}
                 alt="Vidyavanni Illustration"
                 className="max-w-sm rounded-xl shadow-lg"
               />
