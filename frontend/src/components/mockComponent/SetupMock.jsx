@@ -9,7 +9,7 @@ const SetupMock = () => {
 
   return (
     <div
-      className="max-w-2xl mx-auto bg-white shadow-lg rounded-2xl p-8 mt-10"
+      className="max-w-2xl mx-auto shadow-lg rounded-2xl p-8 mt-10"
       data-aos="fade-up"
     >
       <h2 className="text-2xl font-semibold mb-6 text-gray-800">

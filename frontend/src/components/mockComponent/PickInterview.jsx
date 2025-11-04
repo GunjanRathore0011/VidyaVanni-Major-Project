@@ -1,6 +1,7 @@
 // components/PickInterview.jsx
 import React from "react";
 import InterviewCard from "./InterviewCard";
+import SectionWrapper from "./SectionWrapper";
 
 const dummyInterviews = [
   {
@@ -23,16 +24,8 @@ const dummyInterviews = [
 
 const PickInterview = () => {
   return (
-    <div className="my-10">
-      <h2 className="text-2xl font-bold text-gray-800 mb-5">
-        Pick Your Interview
-      </h2>
-      <div className="flex flex-wrap gap-6">
-        {dummyInterviews.map((int, idx) => (
-          <InterviewCard key={idx} interview={int} />
-        ))}
-      </div>
-    </div>
+<SectionWrapper title="Pick Your Interview" items={dummyInterviews} />
+
   );
 };
 

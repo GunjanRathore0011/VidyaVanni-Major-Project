@@ -1,6 +1,7 @@
 // components/PastInterviews.jsx
 import React from "react";
 import InterviewCard from "./InterviewCard";
+import SectionWrapper from "./SectionWrapper";
 
 const dummyPastInterviews = [
   {
@@ -25,16 +26,7 @@ const dummyPastInterviews = [
 
 const PastInterviews = () => {
   return (
-    <div className="my-10">
-      <h2 className="text-2xl font-bold text-gray-800 mb-5">
-        Your Past Interviews
-      </h2>
-      <div className="flex flex-wrap gap-6">
-        {dummyPastInterviews.map((int, idx) => (
-          <InterviewCard key={idx} interview={int} />
-        ))}
-      </div>
-    </div>
+ <SectionWrapper title="Your Past Interviews" items={dummyPastInterviews} />
   );
 };
 

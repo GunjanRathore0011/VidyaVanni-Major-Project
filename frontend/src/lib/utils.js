@@ -1,6 +1,92 @@
-import { clsx } from "clsx";
-import { twMerge } from "tailwind-merge"
+import clsx from "clsx";
+import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs) {
   return twMerge(clsx(inputs));
+}
+
+export function humanize(name) {
+  return name
+    .replace(/-/g, " ")
+    .replace(/([A-Z])/g, " $1")
+    .trim()
+    .split(/\s+/)
+    .map((word) => word[0].toUpperCase() + word.substring(1).toLowerCase())
+    .join(" ");
+}
+
+export const truncate = (str, length) => {
+  if (!str || str.length <= length) return str;
+  return `${str.slice(0, length - 3)}...`;
+};
+
+export const fetcher = (...args) =>
+  fetch(...args).then((res) => res.json());
+
+export const capitalize = (str, lower = false) =>
+  (lower ? str.toLowerCase() : str).replace(/(?:^|\s|["'([{])+\S/g, (match) =>
+    match.toUpperCase());
+
+export function formatDate(input) {
+  const date = new Date(input);
+  return date.toLocaleDateString("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  });
+}
+
+export function absoluteUrl(path) {
+  return `${process.env.NEXT_PUBLIC_APP_URL || "https://nyxui.com"}${path}`;
+}
+
+export function constructMetadata(
+  {
+    title = "Nyx UI - Modern React + Tailwind CSS + Motion components & Templates",
+    description = "Nyx UI is a curated collection of the best landing page components built using React + Tailwind CSS + Motion",
+    image = absoluteUrl("/og"),
+    ...props
+  }
+) {
+  return {
+    title,
+    description,
+    keywords: [
+      "React",
+      "Tailwind CSS",
+      "Motion",
+      "Landing Page",
+      "Components",
+      "Next.js",
+    ],
+    openGraph: {
+      title,
+      description,
+      type: "website",
+      images: [
+        {
+          url: image,
+          width: 1200,
+          height: 630,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [image],
+      creator: "@mihirjaiswal",
+    },
+    icons: "/favicon.ico",
+    metadataBase: new URL("https://nyxui.com/"),
+    authors: [
+      {
+        name: "Mihir Jaiswal",
+        url: "https://github.com/MihirJaiswal",
+      },
+    ],
+    creator: "mihirjaiswal",
+    ...props,
+  };
 }
