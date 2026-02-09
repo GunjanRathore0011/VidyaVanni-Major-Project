@@ -47,7 +47,7 @@ const FeaturesSection = () => {
           className="text-4xl font-extrabold mb-36  text-transparent bg-clip-text bg-gradient-to-r from-[#7E22CE] via-[#9333EA] to-[#C026D3]"
           data-aos="fade-down"
         >
-          Empower Your Future with Vidyavanni
+          Empower Your Future with vidyavaani
         </h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">

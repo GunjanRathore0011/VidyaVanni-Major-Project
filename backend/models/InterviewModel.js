@@ -18,7 +18,16 @@ const interviewSchema = new mongoose.Schema(
     },
     questions: { type: [String], default: [] },
     jobDescription: { type: String, default: "" },
+    transcript: { type: Array, default: [] }, // Store Vapi transcript as an array of messages
+      feedbackData: {
+        score: { type: Number, default: 0 },
+        feedback: { type: String, default: "" },
+        strengths: { type: [String], default: [] },
+        improvements: { type: [String], default: [] },
+        tips: { type: String, default: "" },
   },
+
+},
   { timestamps: true }
 );
 

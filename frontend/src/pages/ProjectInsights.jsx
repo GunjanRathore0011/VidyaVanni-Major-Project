@@ -59,29 +59,20 @@ const ProjectInsights = () => {
   };
 
   return (
-    <div className="min-h-screen  bg-gradient-to-br from-[#0b0014] via-[#1a0025] to-[#26004d]  text-white flex flex-col items-center px-6 py-10 font-inter relative overflow-hidden">
-      {/* Background Blur Layers */}
-      {/* Background Gradient and Glow Effects */}
-      <div className="absolute inset-0 z-0 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#0b0014] via-[#1a0025] to-[#26004d]" />
-
-        {/* Glow Circles */}
-        <div className="absolute top-[-100px] left-[-100px] w-[600px] h-[600px]  bg-gradient-to-br from-[#9b5cff] via-[#c847ff] to-[#00d9ff]  opacity-30 blur-[180px] rounded-full animate-pulse"></div>
-        <div className="absolute bottom-[-100px] right-[-100px] w-[600px] h-[600px]  bg-gradient-to-tr from-[#ff0080] via-[#9b5cff] to-[#007aff] opacity-30 blur-[180px] rounded-full animate-pulse"></div>
-      </div>
-
-
-      <div className="relative z-10 w-full max-w-6xl text-center  mb-10 mt-56">
-        <h1 className="text-4xl md:text-5xl font-bold mb-3 text-violet-300 bg-clip-text ">
+    <div className="min-h-screen bg-gradient-to-br from-[#0b0014] via-[#1a0025] to-[#26004d] text-white flex flex-col items-center px-6 py-10 font-inter relative overflow-hidden">
+      
+      {/* Header Section */}
+      <div className="relative z-10 w-full max-w-6xl text-center mb-12 mt-32">
+        <h1 className="text-5xl font-extrabold mb-4 bg-gradient-to-r from-[#7E22CE] via-[#9333EA] to-[#C026D3] text-transparent bg-clip-text">
           🔍 GitHub Project Insights Dashboard
         </h1>
-        <p className="text-gray-300 text-sm md:text-base">
+        <p className="text-gray-300 text-lg">
           Analyze your repository and get project summary, resume highlights, and interview insights.
         </p>
       </div>
 
       {/* Input Box */}
-      <div className="relative z-10 flex w-full max-w-3xl backdrop-blur-md bg-white/10 border border-white/20 p-4 rounded-2xl shadow-lg mb-10">
+      <div className="relative z-10 flex w-full max-w-3xl backdrop-blur-md bg-white/10 border border-[#9333EA]/30 p-4 rounded-2xl shadow-lg mb-10">
         <input
           type="text"
           value={repoUrl}
@@ -92,7 +83,7 @@ const ProjectInsights = () => {
         <button
           onClick={handleAnalyze}
           disabled={loading}
-          className="cursor-pointer px-6 py-2 backdrop-blur-md bg-white/10 border border-white/10 rounded-xl font-semibold hover:opacity-90 transition disabled:opacity-60"
+          className="px-6 py-2 rounded-xl font-semibold bg-gradient-to-r from-[#7E22CE] via-[#9333EA] to-[#C026D3] hover:opacity-90 transition-all shadow-md"
         >
           {loading ? "Analyzing..." : "Analyze"}
         </button>
@@ -104,37 +95,38 @@ const ProjectInsights = () => {
         </div>
       )}
 
-      {/* Main Content */}
+      {/* --- Result Section --- */}
       {data && (
-        <div className="relative z-10 grid grid-cols-1 md:grid-cols-3 mt-44 mb-10 gap-8 w-full max-w-7xl">
+        <div className="relative z-10 grid grid-cols-1 md:grid-cols-3 mt-10 mb-10 gap-8 w-full max-w-7xl animate-fadeIn">
+          
           {/* Left Panel */}
           <div className="md:col-span-2 flex flex-col gap-8">
+
             {/* Project Summary */}
             {data.summary && (
-                           <div className="backdrop-blur-2xl bg-white/10 border border-white/10 p-6 rounded-2xl shadow-[0_0_25px_rgba(255,255,255,0.05)] hover:shadow-[0_0_30px_rgba(147,51,234,0.4)] transition-all duration-300">
-
-                <h3 className="text-2xl font-semibold mb-3 text-purple-300">
+              <div className="bg-[#15002B]/70 p-6 rounded-2xl border border-[#9333EA]/40 shadow-[0_0_25px_#9333EA50] transition-all hover:shadow-[0_0_40px_#C026D380]">
+                <h3 className="text-2xl font-semibold mb-3 bg-gradient-to-r from-[#7E22CE] via-[#9333EA] to-[#C026D3] text-transparent bg-clip-text flex items-center gap-2">
                   🧩 Project Summary
                 </h3>
-                <p className="text-gray-200 p-5 leading-relaxed">{data.summary}</p>
+                <p className="text-gray-200 leading-relaxed">{data.summary}</p>
               </div>
             )}
 
             {/* Resume Highlights */}
-            {data.resume_points && data.resume_points.length > 0 && (
-              <div className="backdrop-blur-2xl mt-6 bg-white/10 border border-white/10 p-6 rounded-2xl shadow-[0_0_25px_rgba(255,255,255,0.05)] hover:shadow-[0_0_30px_rgba(147,51,234,0.4)] transition-all duration-300">
+            {data.resume_points?.length > 0 && (
+              <div className="bg-[#1A0030]/60 p-6 rounded-2xl border border-[#00ff64]/30 shadow-[0_0_25px_#00ff6440] hover:shadow-[0_0_40px_#00ff6480] transition-all">
                 <div className="flex justify-between items-center mb-3">
-                  <h3 className="text-2xl font-semibold text-blue-300">
+                  <h3 className="text-2xl font-semibold bg-gradient-to-r from-[#00ff64] via-[#93ffb7] to-[#00ff64] text-transparent bg-clip-text">
                     💼 Resume Highlights
                   </h3>
                   <button
                     onClick={handleCopy}
-                    className="text-sm cursor-pointer text-white px-4 py-1.5 rounded-md hover:opacity-90 transition-all backdrop-blur-md bg-white/10 border border-white/20"
+                    className="text-sm cursor-pointer text-white px-4 py-1.5 rounded-md hover:opacity-90 bg-[#00ff64]/20 border border-[#00ff64]/40 backdrop-blur-md transition-all"
                   >
                     {copied ? "Copied!" : "Copy"}
                   </button>
                 </div>
-                <ul className="list-disc pl-6 p-5 text-gray-300 space-y-2">
+                <ul className="list-disc pl-6 text-gray-300 space-y-2">
                   {data.resume_points.map((point, idx) => (
                     <li key={idx}>{point}</li>
                   ))}
@@ -144,22 +136,19 @@ const ProjectInsights = () => {
           </div>
 
           {/* Tech Stack */}
-          {data.tech_stack && data.tech_stack.length > 0 && (
-              <div className="backdrop-blur-2xl bg-white/10 border border-white/10 p-6 rounded-2xl shadow-[0_0_25px_rgba(255,255,255,0.05)] hover:shadow-[0_0_30px_rgba(147,51,234,0.4)] transition-all duration-300">
-            
-              <h3 className="text-2xl font-semibold text-pink-300 mb-3">
+          {data.tech_stack?.length > 0 && (
+            <div className="bg-[#15002B]/70 p-6 rounded-2xl border border-[#9333EA]/40 shadow-[0_0_25px_#9333EA50] hover:shadow-[0_0_40px_#C026D380] transition-all">
+              <h3 className="text-2xl font-semibold mb-3 bg-gradient-to-r from-[#7E22CE] via-[#9333EA] to-[#C026D3] text-transparent bg-clip-text">
                 🧠 Tech Stack
               </h3>
               <div className="flex flex-wrap gap-3">
                 {data.tech_stack.map((tech, idx) => (
                   <span
                     key={idx}
-                    className="px-3 py-1.5 
-  rounded-full text-sm font-medium text-white backdrop-blur-md  transition-all duration-300"
+                    className="px-3 py-1.5 rounded-full text-sm font-medium text-white bg-gradient-to-r from-[#7E22CE]/30 to-[#C026D3]/30 border border-[#9333EA]/30 hover:scale-105 transition-all"
                   >
                     {tech}
                   </span>
-
                 ))}
               </div>
             </div>
@@ -167,16 +156,16 @@ const ProjectInsights = () => {
         </div>
       )}
 
-      {/* Interview Questions */}
+      {/* --- Interview Section --- */}
       {data?.interview_questions?.length > 0 && (
-        <div className="relative z-10 w-full max-w-7xl mt-10 backdrop-blur-lg bg-white/10 border border-white/20 p-6 rounded-2xl shadow-[0_0_25px_rgba(255,255,255,0.05)] hover:shadow-[0_0_30px_rgba(147,51,234,0.4)] transition-all">
+        <div className="relative z-10 w-full max-w-7xl mt-10 bg-[#1A0030]/70 border border-[#9333EA]/40 p-6 rounded-2xl shadow-[0_0_25px_#9333EA30] hover:shadow-[0_0_40px_#C026D380] transition-all animate-fadeIn">
           <div className="flex justify-between items-center mb-4">
-            <h3 className="text-2xl font-semibold text-purple-300">
+            <h3 className="text-2xl font-semibold bg-gradient-to-r from-[#7E22CE] via-[#9333EA] to-[#C026D3] text-transparent bg-clip-text">
               💡 Interview Questions
             </h3>
             <button
               onClick={() => setShowAnswers(!showAnswers)}
-              className="text-sm cursor-pointer text-white px-4 py-1.5 rounded-md hover:opacity-90 transition-all backdrop-blur-md bg-white/10 border border-white/20"
+              className="text-sm cursor-pointer text-white px-4 py-1.5 rounded-md bg-[#9333EA]/20 border border-[#9333EA]/40 backdrop-blur-md hover:opacity-90 transition-all"
             >
               {showAnswers ? "Hide Answers" : "Show Answers"}
             </button>
@@ -187,7 +176,7 @@ const ProjectInsights = () => {
                 <p className="font-medium">{q}</p>
                 {showAnswers && data.interview_answers && (
                   <p className="mt-1 text-gray-300">
-                    <span className="font-semibold text-purple-400">
+                    <span className="font-semibold bg-gradient-to-r from-[#00ff64] to-[#93ffb7] text-transparent bg-clip-text">
                       Answer:
                     </span>{" "}
                     {data.interview_answers[idx]}

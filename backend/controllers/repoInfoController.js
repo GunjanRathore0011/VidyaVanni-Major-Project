@@ -1,7 +1,7 @@
 const axios = require("axios");
 
 // Helper function to fetch file content
-async function fetchFileContent(url) {
+async function fetchFileContent(url) { 
   try {
     const res = await axios.get(url);
     return res.data;

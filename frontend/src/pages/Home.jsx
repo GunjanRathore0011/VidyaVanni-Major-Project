@@ -7,21 +7,23 @@ const Home = () => {
   const heroImage = "YOUR_IMAGE_PATH_HERE"; // Replace later with your illustration
 
   return (
-    <><div className="bg-gradient-to-br from-[#0b0014] via-[#1a0025] to-[#26004d]">
-
+    <>
+    
+    <div className="bg-gradient-to-br from-[#0b0014] via-[#1a0025] to-[#26004d]">
+      
 
 
       <GlowCard
 
         variant="cosmic"
-        intensity={0.8}
+        intensity={0.2}
         liquidColor="#1a0025"
         laserColor="#26004d"
         glitchColor1="#ff0064"
         glitchColor2="#00ff64"
         disabled={false}
         allowCustomBackground={false}
-      >
+        className={"border-0"}    >
 
         <div className="min-h-screen  flex flex-col justify-center items-center px-8 md:px-20 py-12 ">
           <div className="flex flex-col md:flex-row items-center justify-between max-w-6xl w-full">
@@ -53,10 +55,10 @@ const Home = () => {
             </div>
 
             {/* Illustration Section */}
-            <div className="md:w-1/2 mt-10 md:mt-0 flex justify-center">
+            <div className="md:w-1/2 p-5 mt-10 md:mt-0 flex justify-center">
               <img
                 src={homelogo}
-                alt="Vidyavanni Illustration"
+                alt="vidyavaani Illustration"
                 className="max-w-sm rounded-xl shadow-lg"
               />
             </div>
