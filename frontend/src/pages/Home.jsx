@@ -10,11 +10,7 @@ const Home = () => {
     <>
     
     <div className="bg-gradient-to-br from-[#0b0014] via-[#1a0025] to-[#26004d]">
-      
-
-
       <GlowCard
-
         variant="cosmic"
         intensity={0.2}
         liquidColor="#1a0025"
@@ -45,7 +41,7 @@ const Home = () => {
               </p>
 
               <div className="flex space-x-4">
-                <button className="px-6 py-3 text-white font-semibold rounded-full bg-black hover:opacity-90 transition duration-300 shadow-md">
+                <button className="px-6 py-3 text-white font-semibold rounded-full bg-[#7E22CE] hover:opacity-90 transition duration-300 shadow-md">
                   Start Learning
                 </button>
                 <button className="px-6 py-3 font-semibold rounded-full border-2 border-[#9333EA] text-[#9333EA] hover:bg-[#9333EA] hover:text-white transition duration-300">

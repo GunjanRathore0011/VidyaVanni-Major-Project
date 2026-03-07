@@ -7,15 +7,17 @@ import { FiCheckCircle, FiCpu, FiClock, FiTarget, FiZap, FiPlusCircle } from "re
 
 const SetupMock = () => {
   const navigate = useNavigate();
+  const userId = JSON.parse(localStorage.getItem("user"))?._id;
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
+    userId: userId || "",
     role: "",
     interviewType: "technical",
     techStack: "",
     duration: 15,
     level: "intermediate",
-    amount: 5,
+    amount: 10,
     jobDescription: "",
   });
 

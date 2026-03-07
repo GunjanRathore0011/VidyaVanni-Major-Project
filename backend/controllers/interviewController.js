@@ -5,7 +5,7 @@ const { generateFeedback } = require("../Service/geminiService");
 
 const createInterview = async (req, res) => {
   try {
-    const { name, role, interviewType, techStack, duration, level, jobDescription, amount } = req.body;
+    const { name, role, interviewType, techStack, duration, level, jobDescription, amount,userId } = req.body;
 
     if (!name || !role || !interviewType || !techStack || !duration || !level || !amount) {
       return res.status(400).json({ message: "Please fill all required fields." });
@@ -22,6 +22,7 @@ const createInterview = async (req, res) => {
 
     // Save interview + generated questions
     const interview = new Interview({
+      user: userId,
       name,
       role,
       interviewType,
@@ -92,4 +93,20 @@ const saveTranscript = async (req, res) => {
   });
 };
 
-module.exports = {createInterview , startInterviewSession, saveTranscript };
+const getUserInterviews = async (req, res) => {
+  try {
+    const userId = req.params.userId;
+
+    const interviews = await Interview.find({ user: userId });
+
+    res.status(200).json({
+      success: true,
+      data: interviews
+    });
+  } catch (error) {
+    console.error("Error fetching user interviews:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+module.exports = {createInterview , startInterviewSession, saveTranscript, getUserInterviews};

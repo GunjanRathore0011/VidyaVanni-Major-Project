@@ -9,6 +9,7 @@ const interviewSchema = new mongoose.Schema(
       enum: ["technical", "behavioral"],
       required: true,
     },
+    user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
     techStack: { type: String, required: true },
     duration: { type: Number, required: true },
     level: {

@@ -28,9 +28,14 @@ app.use("/api/interview", interviewRoute);
 
 const gitrepoRoute=require("./routes/gitrepoRoute");
 app.use("/api", gitrepoRoute);
+const startServer = async () => {
 
-app.listen(PORT,()=>{
+ await dbconnect();
+
+await app.listen(PORT,()=>{
     console.log(`Server is running on port ${PORT}`);
 });
 
+}
 
+startServer();  

@@ -6,13 +6,6 @@ import { useEffect } from "react";
 
 const features = [
   {
-    icon: <Mic size={28} />,
-    title: "Voice-Based Learning",
-    description:
-      "Learn interactively with voice-driven AI modules that help you speak, listen, and understand better — anytime, anywhere.",
-    aos: "fade-up",
-  },
-  {
     icon: <Bot size={28} />,
     title: "AI Mock Interviews",
     description:

@@ -14,7 +14,7 @@ const StartInterview = () => {
   const [isCallActive, setIsCallActive] = useState(false);
   const [showSummary, setShowSummary] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  
+
   // New State for Feedback
   const [evaluation, setEvaluation] = useState(null);
 
@@ -73,7 +73,28 @@ const StartInterview = () => {
       model: {
         provider: "openai",
         model: "gpt-3.5-turbo",
-        messages: [{ role: "system", content: `You are Alex, a Senior Technical Interviewer. Interview for ${interviewData.role}...` }],
+        messages: [{
+          role: "system",
+          content: `
+You are Alex, a strict and professional Senior Technical Interviewer.
+
+Your task is to conduct a structured technical interview for the role of ${interviewData.role}.
+Tech stack: ${interviewData.techStack}
+
+Rules:
+- Do NOT engage in casual conversation.
+- Do NOT ask about hobbies or personal life.
+- Start immediately with a technical question.
+- Ask one question at a time.
+- Wait for the candidate's response before asking next.
+- Ask 5 technical questions.
+- After final question, say: "This concludes the interview."
+
+Interview format:
+1. Short introduction (1 line only).
+2. Begin technical questions immediately.
+`
+        }]
       },
       voice: { provider: "11labs", voiceId: "burt" },
     });
@@ -86,12 +107,12 @@ const StartInterview = () => {
         interviewId: id,
         transcript: chatHistoryRef.current
       });
-      
+
       // Set the Gemini feedback data from the backend response
       console.log("AI Evaluation Response:", res.data.data);
-      setEvaluation(res.data.data.feedbackData); 
+      setEvaluation(res.data.data.feedbackData);
       setShowSummary(false); // CLOSE the chat history view
-      
+
     } catch (error) {
       console.error("Save error:", error);
       alert("Failed to evaluate interview.");
@@ -102,7 +123,7 @@ const StartInterview = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col items-center py-10 px-4">
-      
+
       {/* 1. Dashboard Header */}
       <div className="max-w-4xl w-full grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
         <div className="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-3">
@@ -167,38 +188,38 @@ const StartInterview = () => {
         /* 3. FINAL FEEDBACK UI (Shows after submit) */
         <div className="max-w-4xl w-full grid grid-cols-1 lg:grid-cols-3 gap-6 animate-in zoom-in-95 duration-700">
           <div className="lg:col-span-1 bg-white p-8 rounded-3xl shadow-xl border border-purple-100 flex flex-col items-center justify-center text-center">
-             <p className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-2">Overall Score</p>
-             <div className="relative flex items-center justify-center">
-                <svg className="w-32 h-32">
-                   <circle className="text-gray-100" strokeWidth="8" stroke="currentColor" fill="transparent" r="58" cx="64" cy="64" />
-                   <circle className="text-purple-600" strokeWidth="8" strokeDasharray={364.4} strokeDashoffset={364.4 - (364.4 * evaluation.score) / 10} strokeLinecap="round" stroke="currentColor" fill="transparent" r="58" cx="64" cy="64" />
-                </svg>
-                <span className="absolute text-4xl font-black text-gray-800">{evaluation.score}<span className="text-lg text-gray-400">/10</span></span>
-             </div>
-             <p className="mt-6 text-gray-600 leading-relaxed italic">"{evaluation.feedback}"</p>
+            <p className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-2">Overall Score</p>
+            <div className="relative flex items-center justify-center">
+              <svg className="w-32 h-32">
+                <circle className="text-gray-100" strokeWidth="8" stroke="currentColor" fill="transparent" r="58" cx="64" cy="64" />
+                <circle className="text-purple-600" strokeWidth="8" strokeDasharray={364.4} strokeDashoffset={364.4 - (364.4 * evaluation.score) / 10} strokeLinecap="round" stroke="currentColor" fill="transparent" r="58" cx="64" cy="64" />
+              </svg>
+              <span className="absolute text-4xl font-black text-gray-800">{evaluation.score}<span className="text-lg text-gray-400">/10</span></span>
+            </div>
+            <p className="mt-6 text-gray-600 leading-relaxed italic">"{evaluation.feedback}"</p>
           </div>
 
           <div className="lg:col-span-2 space-y-6">
-             <div className="bg-white p-6 rounded-3xl shadow-md border border-gray-100">
-                <h4 className="flex items-center gap-2 font-bold text-gray-800 mb-4"><FiMessageSquare className="text-blue-500"/> Key Strengths</h4>
-                <div className="flex flex-wrap gap-2">
-                   {evaluation.strengths.map((s, i) => <span key={i} className="bg-green-50 text-green-700 px-4 py-2 rounded-full text-sm font-medium">✓ {s}</span>)}
-                </div>
-             </div>
-             <div className="bg-white p-6 rounded-3xl shadow-md border border-gray-100">
-                <h4 className="flex items-center gap-2 font-bold text-gray-800 mb-4"> Growth Tips</h4>
-                <ul className="space-y-3">
-                   {evaluation.improvements.map((imp, i) => (
-                     <li key={i} className="flex gap-3 text-sm text-gray-600">
-                        <span className="text-yellow-600 font-bold">•</span> {imp}
-                     </li>
-                   ))}
-                </ul>
-                <div className="mt-4 p-4 bg-blue-50 rounded-xl text-blue-800 text-xs font-medium">
-                   💡 <strong>Pro Tip:</strong> {evaluation.tips}
-                </div>
-             </div>
-             <button onClick={() => window.location.href = '/dashboard'} className="w-full py-4 bg-gray-900 text-white rounded-2xl font-bold shadow-lg">Return to Dashboard</button>
+            <div className="bg-white p-6 rounded-3xl shadow-md border border-gray-100">
+              <h4 className="flex items-center gap-2 font-bold text-gray-800 mb-4"><FiMessageSquare className="text-blue-500" /> Key Strengths</h4>
+              <div className="flex flex-wrap gap-2">
+                {evaluation.strengths.map((s, i) => <span key={i} className="bg-green-50 text-green-700 px-4 py-2 rounded-full text-sm font-medium">✓ {s}</span>)}
+              </div>
+            </div>
+            <div className="bg-white p-6 rounded-3xl shadow-md border border-gray-100">
+              <h4 className="flex items-center gap-2 font-bold text-gray-800 mb-4"> Growth Tips</h4>
+              <ul className="space-y-3">
+                {evaluation.improvements.map((imp, i) => (
+                  <li key={i} className="flex gap-3 text-sm text-gray-600">
+                    <span className="text-yellow-600 font-bold">•</span> {imp}
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-4 p-4 bg-blue-50 rounded-xl text-blue-800 text-xs font-medium">
+                💡 <strong>Pro Tip:</strong> {evaluation.tips}
+              </div>
+            </div>
+            <button onClick={() => window.location.href = '/'} className="w-full py-4 bg-gray-900 text-white rounded-2xl font-bold shadow-lg">Return to Dashboard</button>
           </div>
         </div>
       )}
@@ -207,14 +228,14 @@ const StartInterview = () => {
       {showSummary && !evaluation && (
         <div className="max-w-3xl w-full mt-12 bg-white rounded-3xl p-8 shadow-sm border border-gray-100">
           <h3 className="text-xl font-bold text-gray-800 mb-6 flex justify-between items-center">
-             Transcript 
-             <span className="text-xs bg-gray-100 px-3 py-1 rounded-full text-gray-500 font-normal">{chatHistory.length} messages</span>
+            Transcript
+            <span className="text-xs bg-gray-100 px-3 py-1 rounded-full text-gray-500 font-normal">{chatHistory.length} messages</span>
           </h3>
           <div className="space-y-6 mb-10">
             {chatHistory.map((msg, index) => (
               <div key={index} className={`flex ${msg.role === 'assistant' ? 'justify-start' : 'justify-end'}`}>
                 <div className={`max-w-[85%] p-4 rounded-2xl ${msg.role === 'assistant' ? 'bg-gray-50 text-gray-700 rounded-tl-none' : 'bg-purple-600 text-white shadow-md rounded-tr-none'}`}>
-                   <p className="text-sm leading-relaxed">{msg.text}</p>
+                  <p className="text-sm leading-relaxed">{msg.text}</p>
                 </div>
               </div>
             ))}
