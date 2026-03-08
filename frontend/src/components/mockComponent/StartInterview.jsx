@@ -5,6 +5,7 @@ import axios from "axios";
 import { FiAward, FiCheckCircle, FiTrendingUp, FiMessageSquare } from "react-icons/fi";
 
 const vapi = new Vapi(import.meta.env.VITE_VAPI_PUBLIC_API_KEY);
+const baseURL = import.meta.env.VITE_URL || "http://localhost:4000";
 
 const StartInterview = () => {
   const { id } = useParams();
@@ -23,7 +24,7 @@ const StartInterview = () => {
   useEffect(() => {
     const fetchInterviewDetails = async () => {
       try {
-        const res = await axios.get(`http://localhost:4000/api/interview/start/${id}`);
+        const res = await axios.get(`${baseURL}/api/interview/start/${id}`);
         setInterviewData(res.data.data);
       } catch (err) {
         console.error("Error fetching interview:", err);
@@ -103,7 +104,7 @@ Interview format:
   const submitInterview = async () => {
     try {
       setIsSubmitting(true);
-      const res = await axios.post(`http://localhost:4000/api/interview/save-transcript`, {
+      const res = await axios.post(`${baseURL}/api/interview/save-transcript`, {
         interviewId: id,
         transcript: chatHistoryRef.current
       });

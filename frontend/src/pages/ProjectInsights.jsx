@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 
+const baseURL = import.meta.env.VITE_URL || "http://localhost:4000";
+
 const ProjectInsights = () => {
   const [repoUrl, setRepoUrl] = useState("");
   const [loading, setLoading] = useState(false);
@@ -18,14 +20,14 @@ const ProjectInsights = () => {
     setData(null);
 
     try {
-      const repoRes = await fetch("http://localhost:4000/api/repo-info", {
+      const repoRes = await fetch(`${baseURL}/api/repo-info`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ repoUrl }),
       });
       const repoInfo = await repoRes.json();
 
-      const llmRes = await fetch("http://localhost:4000/api/analyze-llm", {
+      const llmRes = await fetch(`${baseURL}/api/analyze-llm`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ repoInfo }),

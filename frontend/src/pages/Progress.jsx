@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
+const baseURL = import.meta.env.VITE_URL || "http://localhost:4000";
+
 const Progress = () => {
   const [interviews, setInterviews] = useState([]);
 
@@ -10,7 +12,7 @@ const Progress = () => {
       const userId = JSON.parse(localStorage.getItem("user"))?._id;
 
       const res = await axios.get(
-        `http://localhost:4000/api/interview/user/${userId}`,
+        `${baseURL}/api/interview/user/${userId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

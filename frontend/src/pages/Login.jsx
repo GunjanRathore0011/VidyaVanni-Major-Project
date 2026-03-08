@@ -2,7 +2,11 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
+const baseURL = import.meta.env.VITE_URL;
+console.log("Base URL:", baseURL);
+
 const Login = () => {
+
 
   const navigate = useNavigate();
 
@@ -25,7 +29,7 @@ const Login = () => {
 
     try {
 
-      const res = await axios.post("http://localhost:4000/api/auth/signin", formData);
+      const res = await axios.post(`${baseURL}/api/auth/signin`, formData);
 
       // save token
       localStorage.setItem("token", res.data.user.token);

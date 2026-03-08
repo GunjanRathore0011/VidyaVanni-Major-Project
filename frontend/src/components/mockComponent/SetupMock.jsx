@@ -5,6 +5,8 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { FiCheckCircle, FiCpu, FiClock, FiTarget, FiZap, FiPlusCircle } from "react-icons/fi";
 
+const baseURL = import.meta.env.VITE_URL || "http://localhost:4000";
+
 const SetupMock = () => {
   const navigate = useNavigate();
   const userId = JSON.parse(localStorage.getItem("user"))?._id;
@@ -37,7 +39,7 @@ const SetupMock = () => {
         ...formData,
         name: formData.name || `${formData.role} Interview`,
       };
-      const res = await axios.post("http://localhost:4000/api/interview/s", payload);
+      const res = await axios.post(`${baseURL}/api/interview/s`, payload);
       navigate(`/mock/start-interview/${res.data.data._id}`);
     } catch (error) {
       console.error(error);

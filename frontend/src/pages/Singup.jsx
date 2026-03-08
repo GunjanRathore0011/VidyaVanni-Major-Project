@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
+const baseURL = import.meta.env.VITE_URL || "http://localhost:4000";
 const Signup = () => {
 
   const navigate = useNavigate();
@@ -32,7 +33,7 @@ const Signup = () => {
 
     try {
 
-      await axios.post("http://localhost:4000/api/auth/signup", {
+      await axios.post(`${baseURL}/api/auth/signup`, {
         name: formData.name,
         email: formData.email,
         password: formData.password
