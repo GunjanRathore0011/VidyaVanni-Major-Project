@@ -33,8 +33,13 @@ The platform provides **AI-driven mock interviews** and **repository insights** 
 
 ---
 
-👨‍💻 Authors
+## 👨‍💻 Authors
 
-Gunjan Rathore & Jeevan Parmar 
-B.Tech Final Year Student
-MERN Stack & AI Developer
+**Gunjan Rathore**  
+B.Tech Final Year Student  
+MERN Stack & AI Developer  
+
+**Jeevan Parmar**  
+B.Tech Final Year Student  
+MERN Stack & AI Developer  
+
